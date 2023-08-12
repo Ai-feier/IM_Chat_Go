@@ -9,6 +9,7 @@ import (
 func main() {
 	utils.InitConfig()
 	utils.InitMYSQL()
+	utils.InitRedis()
 
 	fmt.Println("MAIN:", utils.DB)
 	r := router.Router()
