@@ -36,11 +36,11 @@ paths:
       tags:
       - 用户模块
   /user/deleteUser:
-    delete:
+    get:
       parameters:
-      - description: 用户名
+      - description: id
         in: query
-        name: name
+        name: id
         type: string
       responses:
         "200":
@@ -48,6 +48,25 @@ paths:
           schema:
             type: string
       summary: 删除用户
+      tags:
+      - 用户模块
+  /user/findByNameAndPwd:
+    get:
+      parameters:
+      - description: 用户名
+        in: query
+        name: name
+        type: string
+      - description: 密码
+        in: query
+        name: password
+        type: string
+      responses:
+        "200":
+          description: code","message"}
+          schema:
+            type: string
+      summary: 通过用户名和密码查询
       tags:
       - 用户模块
   /user/getUserList:
@@ -60,11 +79,11 @@ paths:
       tags:
       - 用户模块
   /user/updateUser:
-    put:
+    post:
       parameters:
       - description: id
         in: formData
-        name: name
+        name: id
         type: string
       - description: 用户名
         in: formData
@@ -73,6 +92,14 @@ paths:
       - description: 密码
         in: formData
         name: password
+        type: string
+      - description: 邮箱
+        in: formData
+        name: email
+        type: string
+      - description: 手机号
+        in: formData
+        name: phone
         type: string
       responses:
         "200":

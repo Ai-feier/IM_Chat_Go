@@ -71,7 +71,7 @@ const docTemplate = `{
             }
         },
         "/user/deleteUser": {
-            "delete": {
+            "get": {
                 "tags": [
                     "用户模块"
                 ],
@@ -79,8 +79,38 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\",\"message\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/findByNameAndPwd": {
+            "get": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "通过用户名和密码查询",
+                "parameters": [
+                    {
+                        "type": "string",
                         "description": "用户名",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "password",
                         "in": "query"
                     }
                 ],
@@ -110,7 +140,7 @@ const docTemplate = `{
             }
         },
         "/user/updateUser": {
-            "put": {
+            "post": {
                 "tags": [
                     "用户模块"
                 ],
@@ -119,7 +149,7 @@ const docTemplate = `{
                     {
                         "type": "string",
                         "description": "id",
-                        "name": "name",
+                        "name": "id",
                         "in": "formData"
                     },
                     {
@@ -132,6 +162,18 @@ const docTemplate = `{
                         "type": "string",
                         "description": "密码",
                         "name": "password",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "邮箱",
+                        "name": "email",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "手机号",
+                        "name": "phone",
                         "in": "formData"
                     }
                 ],
