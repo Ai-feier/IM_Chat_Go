@@ -36,6 +36,7 @@ func GetUserList() []*UserBasic {
 	for _, v := range data {
 		fmt.Println(v)
 	}
+	utils.DB.Table(&UserBasic{}).Joins()
 	return data
 }
 
