@@ -20,9 +20,10 @@ func main() {
 
 	// 迁移 schema
 	//db.AutoMigrate(&models.UserBasic{}) // user_basic表
-	db.AutoMigrate(&models.Contact{})    // contact表
-	db.AutoMigrate(&models.Message{})    // message表
-	db.AutoMigrate(&models.GroupBasic{}) // group_basic表
+	//db.AutoMigrate(&models.Contact{})    // contact表
+	//db.AutoMigrate(&models.Message{})    // message表
+	//db.AutoMigrate(&models.GroupBasic{}) // group_basic表
+	db.AutoMigrate(&models.Community{})
 
 	// Create
 	// Create
