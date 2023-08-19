@@ -36,7 +36,6 @@ func GetUserList() []*UserBasic {
 	for _, v := range data {
 		fmt.Println(v)
 	}
-	utils.DB.Table(&UserBasic{}).Joins()
 	return data
 }
 
@@ -81,4 +80,40 @@ func DeleteUser(user *UserBasic) *gorm.DB {
 // UpdateUser 修改用户
 func UpdateUser(user *UserBasic) *gorm.DB {
 	return utils.DB.Model(user).Updates(UserBasic{Name: user.Name, PassWord: user.PassWord, Phone: user.Phone, Email: user.Email, Avatar: user.Avatar})
+}
+
+// SearchFriend 查找好友
+func SearchFriend(userId uint) []UserBasic {
+	contacts := make([]Contact, 0)
+	objIds := make([]uint64, 0)
+	utils.DB.Where("owner_id = ? and type=1", userId).Find(&contacts)
+	for _, v := range contacts {
+		objIds = append(objIds, uint64(v.TargetId))
+	}
+	users := make([]UserBasic, 0)
+	utils.DB.Where("id in ?", objIds).Find(&users) // 范围搜索
+	return users
+}
+
+func FindUserByName(name string) UserBasic {
+	user := UserBasic{}
+	utils.DB.Where("name = ?", name).First(&user)
+	return user
+}
+
+func FindUserByNameAndPwd(name string, password string) UserBasic {
+	user := UserBasic{}
+	utils.DB.Where("name = ? and pass_word=?", name, password).First(&user)
+
+	//token加密
+	str := fmt.Sprintf("%d", time.Now().Unix())
+	temp := utils.MD5Encoder(str)
+	utils.DB.Model(&user).Where("id = ?", user.ID).Update("identity", temp)
+	return user
+}
+
+func FindByID(id uint) UserBasic {
+	var user UserBasic
+	utils.DB.Where("id = ?", id).Find(&user)
+	return user
 }
